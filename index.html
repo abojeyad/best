@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>حساب أفضل العروض</title>
+  <style>
+    body {
+      direction: rtl;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .notes {
+      text-align: right;
+      display: inline-block;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h2>حساب أفضل العروض</h2>
+  
+  <label>أدخل سعر المنتج: </label>
+  <input type="number" id="price" placeholder=""><br><br>
+
+  <button onclick="calculateOffer()">حساب الخصم والتوفير</button>
+
+  <h3 id="result"></h3>
+
+  <div class="notes">
+    <h4>ملاحظات:</h4>
+    <p>المنتجات الرخيصة تحتاج إلى خصم أعلى لتكون مؤهلة لقسم أفضل العروض.</p>
+    <p>المنتجات الغالية تحتاج إلى خصم منخفض (≥5٪) لتكون مؤهلة لقسم أفضل العروض.</p>
+    <p>الحد الأعلى للخصم المطلوب للمنتجات الرخيصة يتم تحديده في المعادلة بـ50٪ كمرجع أولي.</p>
+    <p>الحد الأدنى للخصم المطلوب للمنتجات الغالية هو 5٪ لضمان أن المنتجات باهظة السعر تبقى مؤهلة.</p>
+    <p><b>المعادلة الديناميكية: الخصم المطلوب = max(5, 50 - السعر / 100)</b></p>
+  </div>
+
+  <script>
+    function calculateOffer() {
+      let price = parseFloat(document.getElementById('price').value);
+
+      if(isNaN(price)) {
+        alert("يرجى إدخال سعر صحيح!");
+        return;
+      }
+
+      let requiredDiscount = Math.max(5, 50 - price / 100);
+      let saving = (price * requiredDiscount / 100).toFixed(2);
+
+      document.getElementById('result').innerHTML = 
+        `الخصم المطلوب للتأهيل: ${requiredDiscount.toFixed(2)}%<br>` +
+        `قيمة التوفير المحتملة عند هذا الخصم: ${saving} ريال`;
+    }
+  </script>
+</body>
+</html>
