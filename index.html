@@ -30,7 +30,7 @@
   <h2>حساب أفضل العروض</h2>
   
   <label>أدخل سعر المنتج: </label>
-  <input type="number" id="price" placeholder=""><br><br>
+  <input type="number" id="price" value="1000"><br><br>
 
   <h3 id="result"></h3>
 
@@ -56,12 +56,15 @@
       let saving = (price * requiredDiscount / 100).toFixed(2);
 
       document.getElementById('result').innerHTML = 
-        `الخصم المطلوب للتأهيل: ${requiredDiscount.toFixed(2)}%<br>` +
+        `الخصم المطلوب للتأهيل: ${requiredDiscount.toFixed(2)}% فأكثر<br>` +
         `قيمة التوفير المحتملة عند هذا الخصم: ${saving} ريال`;
     }
 
     // تحديث النتيجة مباشرة عند تغيير السعر
     document.getElementById('price').addEventListener('input', calculateOffer);
+
+    // حساب النتيجة الافتراضية عند تحميل الصفحة
+    window.onload = calculateOffer;
   </script>
 </body>
 </html>
