@@ -38,9 +38,9 @@
     <h4>ملاحظات:</h4>
     <p>المنتجات الرخيصة تحتاج إلى خصم أعلى لتكون مؤهلة لقسم أفضل العروض.</p>
     <p>المنتجات الغالية تحتاج إلى خصم منخفض (≥10٪) لتكون مؤهلة لقسم أفضل العروض.</p>
-    <p>الحد الأعلى للخصم المطلوب للمنتجات الرخيصة يتم تحديده في المعادلة بـ50٪ كمرجع أولي.</p>
+    <p>الحد الأعلى للخصم المطلوب للمنتجات الرخيصة يتم تحديده في المعادلة بـ75٪ كمرجع أولي.</p>
     <p>الحد الأدنى للخصم المطلوب للمنتجات الغالية هو 10٪ لضمان أن المنتجات باهظة السعر تبقى مؤهلة.</p>
-    <p><b>المعادلة الديناميكية: الخصم المطلوب = max(10, 50 - السعر / 100)</b></p>
+    <p><b>المعادلة الديناميكية: الخصم المطلوب = max(10, 75 - السعر / 100)</b></p>
   </div>
 
   <script>
@@ -52,7 +52,7 @@
         return;
       }
 
-      let requiredDiscount = Math.max(10, 50 - price / 100);
+      let requiredDiscount = Math.max(10, 75 - price / 100);
       let saving = (price * requiredDiscount / 100).toFixed(2);
 
       document.getElementById('result').innerHTML = 
@@ -61,9 +61,7 @@
     }
 
     document.getElementById('price').addEventListener('input', calculateOffer);
-
     window.onload = calculateOffer;
   </script>
 </body>
 </html>
-
