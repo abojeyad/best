@@ -52,7 +52,7 @@
         return;
       }
 
-      let requiredDiscount = Math.max(5, 50 - price / 100);
+      let requiredDiscount = Math.max(10, 50 - price / 100);
       let saving = (price * requiredDiscount / 100).toFixed(2);
 
       document.getElementById('result').innerHTML = 
@@ -68,4 +68,5 @@
   </script>
 </body>
 </html>
+
 
