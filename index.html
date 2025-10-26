@@ -52,7 +52,6 @@
         return;
       }
 
-      // ✅ تم رفع الحد الأدنى من 5 إلى 10
       let requiredDiscount = Math.max(10, 50 - price / 100);
       let saving = (price * requiredDiscount / 100).toFixed(2);
 
@@ -61,11 +60,10 @@
         `قيمة التوفير المحتملة عند هذا الخصم: ${saving} ريال`;
     }
 
-    // تحديث النتيجة مباشرة عند تغيير السعر
     document.getElementById('price').addEventListener('input', calculateOffer);
 
-    // حساب النتيجة الافتراضية عند تحميل الصفحة
     window.onload = calculateOffer;
   </script>
 </body>
 </html>
+
