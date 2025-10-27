@@ -9,27 +9,30 @@
       text-align: center;
       font-family: Arial, sans-serif;
       margin-top: 60px;
+      font-size: 18px;
     }
     input {
-      font-size: 18px;
-      padding: 6px;
-      width: 200px;
+      font-size: 20px;
+      padding: 10px;
+      width: 250px;
       text-align: center;
+      border: 2px solid #007b83;
+      border-radius: 6px;
     }
     .result {
       margin-top: 15px;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       line-height: 1.8;
     }
     .formula {
       margin-top: 20px;
-      font-size: 16px;
+      font-size: 18px;
       color: #444;
     }
     .note {
       margin-top: 25px;
-      font-size: 15px;
+      font-size: 17px;
       color: #555;
       line-height: 1.6;
     }
@@ -38,39 +41,32 @@
 <body>
   <h2>حساب أفضل العروض</h2>
   <input type="number" id="price" value="1000" oninput="calculateDiscount()">
-
   <div class="result" id="result"></div>
   <div class="formula">
-    المعادلة:  
+    المعادلة:  <br>
     <b>الخصم المطلوب = max(10, min(75, 80 − 20 × log₁₀(10 + السعر)))</b>
   </div>
-
   <div class="note">
     النسبة تقل تدريجيًا كلما ارتفع سعر المنتج.<br>
     • الحد الأدنى للخصم: 10٪  <br>
     • الحد الأعلى للخصم: 75٪
   </div>
-
   <script>
+    const priceInput = document.getElementById('price');
+    const resultDiv = document.getElementById('result');
+
     function calculateDiscount() {
-      const price = parseFloat(document.getElementById('price').value);
-      if (isNaN(price) || price < 0) {
-        document.getElementById('result').innerText = '';
+      const price = parseFloat(priceInput.value);
+      if (!price || price < 0) {
+        resultDiv.innerText = '';
         return;
       }
-
       const discount = Math.max(10, Math.min(75, 80 - 20 * Math.log10(10 + price)));
       const saving = price * (discount / 100);
       const finalPrice = price - saving;
-
-      document.getElementById('result').innerHTML = `
-        نسبة الخصم المطلوبة: ${discount.toFixed(2)}٪<br>
-        قيمة التوفير: ${saving.toFixed(2)} ريال<br>
-        السعر بعد الخصم: ${finalPrice.toFixed(2)} ريال
-      `;
+      resultDiv.innerHTML = `نسبة الخصم المطلوبة: ${discount.toFixed(2)}٪<br>قيمة التوفير: ${saving.toFixed(2)} ريال<br>السعر بعد الخصم: ${finalPrice.toFixed(2)} ريال`;
     }
 
-    // حساب تلقائي للقيمة الافتراضية عند تحميل الصفحة
     window.onload = calculateDiscount;
   </script>
 </body>
