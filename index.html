@@ -8,60 +8,70 @@
       direction: rtl;
       text-align: center;
       font-family: Arial, sans-serif;
-      font-size: 18px;
+      margin-top: 60px;
     }
-    input[type=number] {
+    input {
       font-size: 18px;
-      padding: 8px;
+      padding: 6px;
       width: 200px;
+      text-align: center;
     }
-    .notes {
-      text-align: right;
-      display: inline-block;
-      margin-top: 30px;
-      font-size: 18px;
+    .result {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1.8;
     }
-    h3 {
+    .formula {
       margin-top: 20px;
+      font-size: 16px;
+      color: #444;
+    }
+    .note {
+      margin-top: 25px;
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
   <h2>حساب أفضل العروض</h2>
-  
-  <label>أدخل سعر المنتج: </label>
-  <input type="number" id="price" value="1000"><br><br>
+  <input type="number" id="price" value="1000" oninput="calculateDiscount()">
 
-  <h3 id="result"></h3>
+  <div class="result" id="result"></div>
+  <div class="formula">
+    المعادلة:  
+    <b>الخصم المطلوب = max(10, min(75, 80 − 20 × log₁₀(10 + السعر)))</b>
+  </div>
 
-  <div class="notes">
-    <h4>ملاحظات:</h4>
-    <p>المنتجات الرخيصة تحتاج إلى خصم أعلى لتكون مؤهلة لقسم أفضل العروض.</p>
-    <p>المنتجات الغالية تحتاج إلى خصم منخفض (≥10٪) لتكون مؤهلة لقسم أفضل العروض.</p>
-    <p>الحد الأعلى للخصم المطلوب للمنتجات الرخيصة يتم تحديده في المعادلة بـ75٪ كمرجع أولي.</p>
-    <p>الحد الأدنى للخصم المطلوب للمنتجات الغالية هو 10٪ لضمان أن المنتجات باهظة السعر تبقى مؤهلة.</p>
-    <p><b>المعادلة الديناميكية: الخصم المطلوب = max(10, 75 - السعر / 100)</b></p>
+  <div class="note">
+    النسبة تقل تدريجيًا كلما ارتفع سعر المنتج.<br>
+    • الحد الأدنى للخصم: 10٪  <br>
+    • الحد الأعلى للخصم: 75٪
   </div>
 
   <script>
-    function calculateOffer() {
-      let price = parseFloat(document.getElementById('price').value);
-
-      if(isNaN(price) || price <= 0) {
-        document.getElementById('result').innerHTML = '';
+    function calculateDiscount() {
+      const price = parseFloat(document.getElementById('price').value);
+      if (isNaN(price) || price < 0) {
+        document.getElementById('result').innerText = '';
         return;
       }
 
-      let requiredDiscount = Math.max(10, 75 - price / 100);
-      let saving = (price * requiredDiscount / 100).toFixed(2);
+      const discount = Math.max(10, Math.min(75, 80 - 20 * Math.log10(10 + price)));
+      const saving = price * (discount / 100);
+      const finalPrice = price - saving;
 
-      document.getElementById('result').innerHTML = 
-        `الخصم المطلوب للتأهيل: ${requiredDiscount.toFixed(2)}% فأكثر<br>` +
-        `قيمة التوفير المحتملة عند هذا الخصم: ${saving} ريال`;
+      document.getElementById('result').innerHTML = `
+        نسبة الخصم المطلوبة: ${discount.toFixed(2)}٪<br>
+        قيمة التوفير: ${saving.toFixed(2)} ريال<br>
+        السعر بعد الخصم: ${finalPrice.toFixed(2)} ريال
+      `;
     }
 
-    document.getElementById('price').addEventListener('input', calculateOffer);
-    window.onload = calculateOffer;
+    // حساب تلقائي للقيمة الافتراضية عند تحميل الصفحة
+    window.onload = calculateDiscount;
   </script>
 </body>
 </html>
